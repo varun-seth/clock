@@ -1,0 +1,15 @@
+{
+    "background_color": "black",
+    "description": "Clock",
+    "display": "fullscreen",
+    "icons": [
+        {
+            "src": "https://raw.githubusercontent.com/google/material-design-icons/master/png/device/access_time/materialicons/48dp/2x/baseline_access_time_black_48dp.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        }
+    ],
+    "name": "Clock",
+    "short_name": "Clock",
+    "start_url": "index.html"
+}
