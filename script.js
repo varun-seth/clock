@@ -5,7 +5,7 @@ function addLegend(hour) {
     element.style.position = "absolute";
     innerElement.classList.add("legends");
     let degree = hour * 30;
-    element.style.transform = `translate(50vmin, 2vmin) rotate(${degree}deg)`;
+    element.style.transform = `translate(50vmin, 0vmin) rotate(${degree}deg)`;
     clockContainer.appendChild(element);
     element.appendChild(innerElement);
 }
