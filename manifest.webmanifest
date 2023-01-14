@@ -1,12 +1,29 @@
 {
     "background_color": "black",
+    "theme_color": "black",
     "description": "Clock",
     "display": "fullscreen",
     "icons": [
         {
-            "src": "https://raw.githubusercontent.com/google/material-design-icons/master/png/device/access_time/materialicons/48dp/2x/baseline_access_time_black_48dp.png",
-            "sizes": "48x48",
-            "type": "image/png"
+            "src": "assets/icon-maskable.png",
+            "sizes": "128x128 512x512 1024x1024",
+            "type": "image/png",
+            "purpose": "maskable",
+            "comment": "For Chrome (android)"
+        },
+        {
+            "src": "assets/icon-flat.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any",
+            "comment": "For Safari / iOS"
+        },
+        {
+            "src": "logo.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any",
+            "comment": "For all without mentioning sizes"
         }
     ],
     "name": "Clock",
