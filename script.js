@@ -58,4 +58,3 @@ function nextStyle() {
 nextStyle();
 
 document.addEventListener('click', nextStyle);
-document.addEventListener('touchstart', nextStyle);

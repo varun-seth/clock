@@ -7,6 +7,7 @@
     --text-color: white;
     --background-color: black;
     --second-color: red;
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -35,6 +36,15 @@
 
 html,
 body {
+    /* prevent selecting because there is nothing to select */
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE 10+ and Edge */
+    user-select: none;
+
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
