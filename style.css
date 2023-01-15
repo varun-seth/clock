@@ -78,9 +78,8 @@ body {
     opacity: 0.7;
     z-index: 0;
     transform-origin: 0vmin 50vmin;
-    /* border-radius: 50%; */
     width: 1%;
-    height: 6%;
+    height: 5%;
 }
 
 #hour {
@@ -88,28 +87,25 @@ body {
     width: 3%;
     height: 25%;
     opacity: 1;
-    border-radius: 50%;
 }
 
 #minute {
     z-index: 2;
     width: 2%;
-    height: 42%;
-    border-radius: 50%;
 }
 
 #second {
     z-index: 3;
     background-color: var(--second-color);
     width: 1%;
-    height: 44%;
+    height: 50%;
 }
 
 #center {
+    background-color: var(--text-color);
     z-index: 5;
     transform-origin: bottom left;
     transform: translate(-50%, 50%);
-    background-color: var(--text-color);
     border-radius: 100%;
     width: 3%;
     height: 3%;

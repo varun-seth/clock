@@ -1,0 +1,16 @@
+.oval .legendsContainer {
+    height: 6%;
+}
+
+.oval #hour {
+    border-radius: 50%;
+}
+
+.oval #minute {
+    border-radius: 50%;
+    height: 42%;
+}
+
+.oval #second {
+    height: 44%;
+}

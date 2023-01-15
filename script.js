@@ -52,7 +52,7 @@ themes = [
 ];
 
 function nextStyle() {
-    document.getElementById('theme-container').className = `style-` + themes[styleIndex];
+    document.getElementById('theme-container').className = themes[styleIndex];
     styleIndex = (styleIndex + 1) % themes.length;
 }
 nextStyle();
