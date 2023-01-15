@@ -3,8 +3,10 @@
 }
 
 :root {
-    --text-color: black;
-    --background-color: white;
+    /* By default prefers dark theme. */
+    --text-color: white;
+    --background-color: black;
+    --second-color: red;
 }
 
 @media (prefers-color-scheme: light) {
@@ -98,8 +100,7 @@ body {
 
 #second {
     z-index: 3;
-    /* transform: translate(-50%, 5%); */
-    background-color: red;
+    background-color: var(--second-color);
     width: 1%;
     height: 44%;
 }

@@ -44,3 +44,18 @@ function updateTime() {
 }
 
 updateTime();
+let styleIndex = 0;
+
+themes = [
+    'flat', // new flat design with rounded corners
+    'oval', // original design
+];
+
+function nextStyle() {
+    document.getElementById('theme-container').className = `style-` + themes[styleIndex];
+    styleIndex = (styleIndex + 1) % themes.length;
+}
+nextStyle();
+
+document.addEventListener('click', nextStyle);
+document.addEventListener('touchstart', nextStyle);

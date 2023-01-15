@@ -6,7 +6,10 @@
 </div>
 
 
-A minimalist analog clock, made for old phones and tablets
+A minimalist analog clock, made for old phones and tablets.
+
+- Switch between designs by clicking or tapping anywhere on the screen.
+- Supports dark and light themes set by the user's system preferences.
 
 ## Install
 
