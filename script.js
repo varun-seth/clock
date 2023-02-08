@@ -44,9 +44,9 @@ function updateTime() {
     let minuteRotation = 6 * minutes + secondsRounded / 10;
     let secondRotation = 6 * secondsRounded;
 
-    hour.style.transform = `translate(-50%, 0%) rotate(${hourRotation}deg)`;
-    minute.style.transform = `translate(-50%, 0%) rotate(${minuteRotation}deg)`;
-    second.style.transform = `translate(-50%, 0%) rotate(${secondRotation}deg)`;
+    document.documentElement.style.setProperty('--rotation-angle-hour', `${hourRotation}deg`);
+    document.documentElement.style.setProperty('--rotation-angle-minute', `${minuteRotation}deg`);
+    document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
 }
 
 updateTime();

@@ -7,7 +7,7 @@
     --text-color: white;
     --background-color: black;
     --second-color: red;
-
+    --second-tail-length: 15%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -105,11 +105,14 @@ body {
     width: 3%;
     height: 25%;
     opacity: 1;
+    transform: translate(-50%, 0%) rotate(var(--rotation-angle-hour));
 }
 
 #minute {
     z-index: 2;
     width: 2%;
+    height: 50%;
+    transform: translate(-50%, 0%) rotate(var(--rotation-angle-minute));
 }
 
 #second {
@@ -117,6 +120,7 @@ body {
     background-color: var(--second-color);
     width: 1%;
     height: 50%;
+    transform: translateX(-50%) rotate(var(--rotation-angle-second)) translateY(var(--second-tail-length)) scaleY(calc(100% + var(--second-tail-length)));
 }
 
 #center {

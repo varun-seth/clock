@@ -3,6 +3,10 @@
     margin-top: 50%;
 }
 
+.flat {
+    --second-tail-length: 20%;
+}
+
 
 .flat .legendsContainer {
     height: 3.5%;
@@ -21,15 +25,4 @@
 .flat #second {
     width: 0.5%;
     height: 49%;
-}
-
-.flat #second::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 10%;
-    background: var(--second-color);
-    position: absolute;
-    left: 0;
-    top: 100%;
 }
