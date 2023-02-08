@@ -51,6 +51,19 @@ themes = [
     'oval', // original design
 ];
 
+function loadStyleSheet(path) {
+    var head = document.head; // Selecting the head element
+    var link = document.createElement('link'); // Creating a link element
+
+    link.rel = 'stylesheet'; // Setting relation to stylesheet
+    link.type = 'text/css'; // Setting the type of the link element
+    link.href = path; // Setting the path of the stylesheet
+
+    head.appendChild(link); // Appending the link element to the head
+}
+
+themes.map((name) => { loadStyleSheet(`style-${name}.css`); })
+
 function nextStyle() {
     document.getElementById('theme-container').className = themes[styleIndex];
     styleIndex = (styleIndex + 1) % themes.length;
