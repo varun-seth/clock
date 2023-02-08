@@ -1,5 +1,6 @@
 .oval .legendsContainer {
     height: 6%;
+    width: 1%;
 }
 
 .oval .legendsContainer:last-child .legends {
@@ -15,9 +16,9 @@
 
 .oval #minute {
     border-radius: 50%;
-    height: 42%;
+    height: 45%;
 }
 
 .oval #second {
-    height: 44%;
+    height: 47%;
 }
