@@ -1,17 +1,18 @@
 function addLegend(hour) {
+    let dial = document.getElementById('dial');
     let element = document.createElement("DIV");
     element.classList.add("legendsContainer");
     let innerElement = document.createElement("DIV");
     element.style.position = "absolute";
     innerElement.classList.add("legends");
     let degree = hour * 30;
-    element.style.transform = `translate(50vmin, 0vmin) rotate(${degree}deg)`;
-    clockContainer.appendChild(element);
+    element.style.transform = `rotate(${degree}deg)`;
+    dial.appendChild(element);
     element.appendChild(innerElement);
 }
 
 for (let i = 0; i < 12; i++) {
-    addLegend(i);
+    addLegend(i + 1);
 }
 
 function updateTime() {
@@ -21,9 +22,14 @@ function updateTime() {
     // next tik's time, tries to be close to 1000
     // if current ms is 007, then wait for 903 ms
     // if current ms is 990, then wait for 1000 + 10 ms before updating time.
+    // the minimum waiting is 500ms, maximum waiting is 1500ms. 
+    // This avoids the sudden jerky animation in the beginning for caliberation.
     let lag = milliseconds < 500 ? milliseconds : milliseconds - 1000;
 
     let nextTime = 1000 - lag;
+
+    // This is better than setInterval (which can be slowed down by the browser due to inactivity)
+    // If two devices have same time, their clocks will visually together.
     setTimeout(() => {
         updateTime();
     }, nextTime);

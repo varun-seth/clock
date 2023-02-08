@@ -2,6 +2,13 @@
     height: 6%;
 }
 
+.oval .legendsContainer:last-child .legends {
+    width: 250%;
+    background-color: var(--text-color);
+    background-image: linear-gradient(to right, transparent 40%, var(--background-color) 40%, var(--background-color) 60%, transparent 60%);
+}
+
+
 .oval #hour {
     border-radius: 50%;
 }
