@@ -52,7 +52,7 @@ function updateTime() {
 updateTime();
 let styleIndex = 0;
 
-themes = [
+styles = [
     'flat', // new flat design with rounded corners
     'oval', // original design
 ];
@@ -68,12 +68,29 @@ function loadStyleSheet(path) {
     head.appendChild(link); // Appending the link element to the head
 }
 
-themes.map((name) => { loadStyleSheet(`style-${name}.css`); })
+styles.map((name) => { loadStyleSheet(`style-${name}.css`); })
+
+function applyStyle(styleName) {
+    document.getElementById('theme-container').className = styleName;
+    localStorage.setItem('style', styleName);
+}
 
 function nextStyle() {
-    document.getElementById('theme-container').className = themes[styleIndex];
-    styleIndex = (styleIndex + 1) % themes.length;
+    console.log("click", styleIndex);
+    styleIndex = (styleIndex + 1) % styles.length;
+    applyStyle(styles[styleIndex]);
 }
-nextStyle();
+
+function applyStyleBoot() {
+    let style = localStorage.getItem('style') || styles[0];
+    let index = styles.indexOf(style);
+    if (index == -1) {
+        index = 0;
+    }
+    styleIndex = index;
+    applyStyle(styles[index]);
+}
+
+applyStyleBoot();
 
 document.addEventListener('click', nextStyle);
