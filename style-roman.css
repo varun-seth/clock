@@ -1,0 +1,63 @@
+.roman .legendsContainer {
+    width: 0.5%;
+    height: 3%;
+}
+
+.roman .legends {
+    margin-top: 50%;
+}
+
+.roman .legendsContainer::after {
+    position: absolute;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 15vmin;
+    transform: translateX(-50%) scaleX(0.3);
+}
+
+.roman .legendsContainer:nth-child(1)::after {
+    content: "I";
+}
+
+.roman .legendsContainer:nth-child(2)::after {
+    content: "II";
+}
+
+.roman .legendsContainer:nth-child(3)::after {
+    content: "III";
+}
+
+.roman .legendsContainer:nth-child(4)::after {
+    content: "IV";
+}
+
+.roman .legendsContainer:nth-child(5)::after {
+    content: "V";
+}
+
+.roman .legendsContainer:nth-child(6)::after {
+    content: "VI";
+}
+
+.roman .legendsContainer:nth-child(7)::after {
+    content: "VII";
+}
+
+.roman .legendsContainer:nth-child(8)::after {
+    content: "VIII";
+}
+
+.roman .legendsContainer:nth-child(9)::after {
+    content: "IX";
+}
+
+.roman .legendsContainer:nth-child(10)::after {
+    content: "X";
+}
+
+.roman .legendsContainer:nth-child(11)::after {
+    content: "XI";
+}
+
+.roman .legendsContainer:nth-child(12)::after {
+    content: "XII";
+}

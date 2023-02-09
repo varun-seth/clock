@@ -55,6 +55,7 @@ let styleIndex = 0;
 styles = [
     'flat', // new flat design with rounded corners
     'oval', // original design
+    'roman', // Roman numerals
 ];
 
 function loadStyleSheet(path) {
