@@ -1,3 +1,15 @@
+.roman {
+    --tail-length-hour: 16%;
+    --tail-length-minute: 10%;
+    --tail-length-second: 16%;
+}
+
+.roman .legendsContainer:last-child .legends {
+    width: 250%;
+    background-color: transparent;
+    background-image: linear-gradient(to right, var(--text-color) 40%, var(--background-color) 40%, var(--background-color) 60%, var(--text-color) 60%);
+}
+
 .roman .legendsContainer {
     width: 0.5%;
     height: 3%;
@@ -60,4 +72,22 @@
 
 .roman .legendsContainer:nth-child(12)::after {
     content: "XII";
+}
+
+.roman .legendsContainer {
+    opacity: 0.5;
+}
+
+.roman #hour {
+    width: 3%;
+}
+
+.roman #minute {
+    height: 49%;
+    width: 2%;
+}
+
+.roman #second {
+    width: 1%;
+    height: 50%;
 }

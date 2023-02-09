@@ -7,7 +7,9 @@
     --text-color: white;
     --background-color: black;
     --second-color: red;
-    --second-tail-length: 15%;
+    --tail-length-hour: 0%;
+    --tail-length-minute: 0%;
+    --tail-length-second: 15%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -106,14 +108,14 @@ body {
     width: 3%;
     height: 25%;
     opacity: 1;
-    transform: translate(-50%, 0%) rotate(var(--rotation-angle-hour));
+    transform: translateX(-50%) rotate(var(--rotation-angle-hour)) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
 }
 
 #minute {
     z-index: 2;
     width: 2%;
     height: 50%;
-    transform: translate(-50%, 0%) rotate(var(--rotation-angle-minute));
+    transform: translateX(-50%) rotate(var(--rotation-angle-minute)) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
 }
 
 #second {
@@ -121,7 +123,7 @@ body {
     background-color: var(--second-color);
     width: 1%;
     height: 50%;
-    transform: translateX(-50%) rotate(var(--rotation-angle-second)) translateY(var(--second-tail-length)) scaleY(calc(100% + var(--second-tail-length)));
+    transform: translateX(-50%) rotate(var(--rotation-angle-second)) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
 }
 
 #center {
