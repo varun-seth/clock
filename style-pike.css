@@ -1,0 +1,66 @@
+.pike .legendsContainer {
+    width: 1%;
+}
+
+.pike .legends {
+    clip-path: polygon(0% 0%, 40% 100%, 60% 100%, 100% 0%);
+}
+
+
+.pike .legendsContainer:last-child .legends {
+    width: 250%;
+    background-color: transparent;
+    background-image: linear-gradient(to right, var(--text-color) 40%, var(--background-color) 40%, var(--background-color) 60%, var(--text-color) 60%);
+    clip-path: polygon(0% 0%, 32% 100%, 68% 100%, 100% 0%);
+}
+
+
+
+.pike #hour,
+.pike #minute,
+.pike #second {
+    background-color: transparent;
+    box-shadow: none;
+    filter: drop-shadow(0 0 0.5vmin var(--background-color));
+}
+
+.pike #hour {}
+
+.pike #hour-clippable {
+    height: 100%;
+    width: 100%;
+    background-color: var(--text-color);
+
+    clip-path: polygon(50% 0%, 55% 2%, 60% 5%, 65% 10%, 70% 20%, 75% 30%, 78% 40%, 80% 50%,
+            82% 60%, 83% 70%, 84% 80%, 85% 90%, 50% 100%, 15% 90%, 16% 80%, 17% 70%,
+            18% 60%, 20% 50%, 22% 40%, 25% 30%, 30% 20%, 35% 10%, 40% 5%, 45% 2%);
+}
+
+.pike #minute {
+    height: 47%;
+    width: 6%;
+    background-color: transparent;
+}
+
+.pike #minute-clippable {
+    height: 100%;
+    width: 100%;
+    clip-path: polygon(51% 0%,
+            53% 5%, 54% 10%, 56% 20%, 58% 30%, 59% 40%, 60% 50%, 61% 60%,
+            62% 70%, 63% 80%, 64% 90%, 65% 95%, 50% 100%, 35% 95%, 36% 90%, 37% 80%,
+            38% 70%, 39% 60%, 40% 50%, 41% 40%, 42% 30%, 44% 20%, 46% 10%, 47% 5%, 49% 0%);
+
+    background-color: var(--text-color);
+}
+
+
+.pike #second {
+    height: 49%;
+}
+
+.pike #second-clippable {
+    height: 100%;
+    width: 100%;
+    background-color: var(--second-color);
+    clip-path: polygon(40% 0%, 0% 100%, 100% 100%, 60% 0%);
+}

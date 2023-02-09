@@ -5,10 +5,13 @@
 
 .oval .legendsContainer:last-child .legends {
     width: 250%;
-    background-color: var(--text-color);
-    background-image: linear-gradient(to right, transparent 40%, var(--background-color) 40%, var(--background-color) 60%, transparent 60%);
+    background-color: transparent;
+    background-image: linear-gradient(to right, var(--text-color) 40%, var(--background-color) 40%, var(--background-color) 60%, var(--text-color) 60%);
 }
 
+.oval .legends {
+    border-radius: 50%;
+}
 
 .oval #hour {
     border-radius: 50%;

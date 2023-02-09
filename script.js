@@ -53,9 +53,10 @@ updateTime();
 let styleIndex = 0;
 
 styles = [
-    'flat', // new flat design with rounded corners
-    'oval', // original design
+    'pill', // Rounded corners
+    'oval',
     'roman', // Roman numerals
+    'pike', // pointy design (polygon)
 ];
 
 function loadStyleSheet(path) {
@@ -77,7 +78,6 @@ function applyStyle(styleName) {
 }
 
 function nextStyle() {
-    console.log("click", styleIndex);
     styleIndex = (styleIndex + 1) % styles.length;
     applyStyle(styles[styleIndex]);
 }
