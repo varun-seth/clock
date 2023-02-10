@@ -72,26 +72,52 @@ function loadStyleSheet(path) {
 
 styles.map((name) => { loadStyleSheet(`style-${name}.css`); })
 
-function applyStyle(styleName) {
+function applyStyle(styleName, preventPush = false) {
+    document.title = `Clock - ${styleName} style`;
     document.getElementById('theme-container').className = styleName;
     localStorage.setItem('style', styleName);
+    if (!preventPush) {
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('style', styleName);
+        history.pushState({}, '', currentUrl);
+    }
 }
+
 
 function nextStyle() {
     styleIndex = (styleIndex + 1) % styles.length;
     applyStyle(styles[styleIndex]);
 }
 
-function applyStyleBoot() {
-    let style = localStorage.getItem('style') || styles[0];
+function getStyleFromUrlOrDefault() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let style = urlParams.get('style');
+
+    if (!style) {
+        style = localStorage.getItem('style') || styles[0];
+    }
+
     let index = styles.indexOf(style);
     if (index == -1) {
         index = 0;
+        style = styles[0]; // Fallback to default if not found
     }
-    styleIndex = index;
-    applyStyle(styles[index]);
+    return style;
 }
+
+function applyStyleBoot() {
+    let style = getStyleFromUrlOrDefault();
+    styleIndex = styles.indexOf(style);
+    applyStyle(style);
+}
+
 
 applyStyleBoot();
 
 document.addEventListener('click', nextStyle);
+
+window.addEventListener('popstate', function (event) {
+    // When the user navigates back/forward, read the style from the URL and apply it
+    let style = getStyleFromUrlOrDefault();
+    applyStyle(style, true);
+});
