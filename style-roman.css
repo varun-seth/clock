@@ -4,19 +4,22 @@
     --tail-length-second: 16%;
 }
 
-.roman .legendsContainer:last-child .legends {
-    width: 250%;
-    background-color: transparent;
-    background-image: linear-gradient(to right, var(--text-color) 40%, var(--background-color) 40%, var(--background-color) 60%, var(--text-color) 60%);
+.roman #clockContainer {
+    border-radius: 50vmin;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000' version='1.1'%3E%3Ccircle cx='500' cy='500' r='495' fill='none' stroke='gray' stroke-width='5'/%3E%3Ccircle cx='500' cy='500' r='465' fill='none' stroke='gray' stroke-width='5'/%3E %3Ccircle cx='500' cy='500' r='296' fill='none' stroke='gray' stroke-width='5'/%3E %3E%3Cg transform='rotate(-0.25 500 500)'%3E%3Ccircle cx='500' cy='500' r='480' fill='none' stroke='%23808080' stroke-width='30' stroke-dasharray='5,45.2654824574' /%3E%3C/g%3E %3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
 }
 
 .roman .legendsContainer {
+    opacity: 0.5;
     width: 0.5%;
-    height: 3%;
+    height: 2.5%;
 }
 
 .roman .legends {
-    margin-top: 50%;
+    margin-top: 150%;
 }
 
 .roman .legendsContainer::after {
@@ -74,10 +77,6 @@
     content: "XII";
 }
 
-.roman .legendsContainer {
-    opacity: 0.5;
-}
-
 .roman #hour {
     width: 3%;
 }
@@ -89,5 +88,5 @@
 
 .roman #second {
     width: 1%;
-    height: 50%;
+    height: 49.25%;
 }
