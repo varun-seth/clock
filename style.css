@@ -1,8 +1,5 @@
 :root {
     color-scheme: light dark;
-}
-
-:root {
     /* By default prefers dark theme. */
     --text-color: white;
     --background-color: black;
