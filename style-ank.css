@@ -1,0 +1,115 @@
+.ank {
+    --tail-length-hour: 16%;
+    --tail-length-minute: 10%;
+    --tail-length-second: 16%;
+}
+
+.ank .legendsContainer:last-child .legends {
+    width: 250%;
+    background-color: transparent;
+    background-image: linear-gradient(to right, var(--text-color) 40%, var(--background-color) 40%, var(--background-color) 60%, var(--text-color) 60%);
+}
+
+.ank .legendsContainer {
+    width: 0.5%;
+    height: 3%;
+}
+
+.ank .legends {
+    margin-top: 50%;
+}
+
+.ank .legendsContainer::after {
+    position: absolute;
+    font-family: sans-serif, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 7vmin;
+    transform: translateX(-50%);
+    width: 1.5em;
+    height: 1.5em;
+    display: grid;
+    place-items: center;
+}
+
+.ank .legendsContainer:nth-child(1)::after {
+    content: "1";
+    /* rotate: -30deg; */
+    transform: translateX(-50%) rotate(-30deg);
+}
+
+.ank .legendsContainer:nth-child(2)::after {
+    content: "2";
+    /* rotate: -60deg; */
+    transform: translateX(-50%) rotate(-60deg);
+}
+
+.ank .legendsContainer:nth-child(3)::after {
+    content: "3";
+    /* rotate: -90deg; */
+    transform: translateX(-50%) rotate(-90deg);
+}
+
+.ank .legendsContainer:nth-child(4)::after {
+    content: "4";
+    /* rotate: -120deg; */
+    transform: translateX(-50%) rotate(-120deg);
+}
+
+.ank .legendsContainer:nth-child(5)::after {
+    content: "5";
+    transform: translateX(-50%) rotate(-150deg);
+}
+
+.ank .legendsContainer:nth-child(6)::after {
+    content: "6";
+    transform: translateX(-50%) rotate(-180deg);
+}
+
+.ank .legendsContainer:nth-child(7)::after {
+    content: "7";
+    transform: translateX(-50%) rotate(-210deg);
+}
+
+.ank .legendsContainer:nth-child(8)::after {
+    content: "8";
+    transform: translateX(-50%) rotate(-240deg);
+}
+
+.ank .legendsContainer:nth-child(9)::after {
+    content: "9";
+    transform: translateX(-50%) rotate(-270deg);
+}
+
+.ank .legendsContainer:nth-child(10)::after {
+    content: "10";
+    transform: translateX(-50%) rotate(-300deg);
+}
+
+.ank .legendsContainer:nth-child(11)::after {
+    content: "11";
+    transform: translateX(-50%) rotate(-330deg);
+}
+
+.ank .legendsContainer:nth-child(12)::after {
+    content: "12";
+
+    transform: translateX(-50%) rotate(-0deg);
+
+}
+
+.ank .legendsContainer {
+    opacity: 0.5;
+}
+
+.ank #hour {
+    width: 3%;
+}
+
+.ank #minute {
+    height: 49%;
+    width: 2%;
+}
+
+.ank #second {
+    width: 1%;
+    height: 50%;
+}

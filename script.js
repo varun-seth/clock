@@ -56,6 +56,7 @@ styles = [
     'pill', // Rounded corners
     'oval',
     'roman', // Roman numerals
+    'ank', // ank means numbers
     'pike', // pointy design (polygon)
 ];
 
