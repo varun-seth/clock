@@ -21,3 +21,19 @@ This App can be installed as a WebApp using the browser. This way it can be open
 - Chrome -> menu -> Create Shortcut...
 - iOS Safari -> share -> Add to Home Screen.
 - macOS Safari -> Share -> Add to Dock
+
+
+## Dev
+
+This is a basic HTML/CSS/JS project without any build step.
+
+To run a local server for development, you can use `live-server`.
+
+```bash
+npm install -g live-server
+live-server
+
+# or if you have Python 3 installed
+python3 -m http.server
+# This will serve the files at http://localhost:8000
+```

@@ -2,7 +2,9 @@
     color-scheme: light dark;
     /* By default prefers dark theme. */
     --text-color: white;
+    --text-rgb: 255, 255, 255;
     --background-color: black;
+    --background-rgb: 0, 0, 0;
     --second-color: red;
     --tail-length-hour: 0%;
     --tail-length-minute: 0%;
@@ -12,14 +14,18 @@
 @media (prefers-color-scheme: light) {
     :root {
         --text-color: black;
+        --text-rgb: 0, 0, 0;
         --background-color: white;
+        --background-rgb: 255, 255, 255;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --text-color: white;
+        --text-rgb: 255, 255, 255;
         --background-color: black;
+        --background-rgb: 0, 0, 0;
     }
 }
 
@@ -46,6 +52,7 @@ body {
 
     background-color: var(--background-color);
     color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -131,4 +138,128 @@ body {
     border-radius: 100%;
     width: 3%;
     height: 3%;
+}
+
+#theme-container.hide-seconds #second {
+    display: none;
+}
+
+#settingsButton {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000;
+    background: rgba(var(--text-rgb), 0.06);
+    color: var(--text-color);
+    border: 1px solid rgba(var(--text-rgb), 0.12);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 100ms linear;
+}
+
+#settingsButton.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+dialog#settingsDialog {
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid rgba(var(--text-rgb), 0.12);
+    box-shadow: 0 8px 24px rgba(var(--background-rgb), 0.35);
+}
+
+dialog::backdrop {
+    background: rgba(var(--background-rgb), 0.4);
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-family: inherit;
+}
+
+dialog menu {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+dialog label {
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 3.6vmin;
+    line-height: 1.1;
+}
+
+dialog select,
+dialog button {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid rgba(var(--text-rgb), 0.12);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+dialog button#saveButton {
+    background: rgba(var(--text-rgb), 0.08);
+}
+
+#theme-container.theme-light {
+    --text-color: black;
+    --text-rgb: 0, 0, 0;
+    --background-color: white;
+    --background-rgb: 255, 255, 255;
+}
+
+#theme-container.theme-dark {
+    --text-color: white;
+    --text-rgb: 255, 255, 255;
+    --background-color: black;
+    --background-rgb: 0, 0, 0;
+}
+
+#settingsButton {
+    width: 24vmin;
+    height: 8vmin;
+    padding: 0 2vmin;
+    font-size: 5vmin;
+    border-radius: 1vmin;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(var(--background-rgb), 0.25);
+    transition: transform 120ms ease, opacity 100ms linear;
+}
+
+dialog#settingsDialog {
+    width: 44vmin;
+    max-width: 90vmin;
+    padding: 2vmin;
+    border-radius: 1vmin;
+}
+
+dialog select,
+dialog button {
+    padding: 1.2vmin 1.6vmin;
+    font-size: 4vmin;
+}
+
+dialog label {
+    font-size: 3.6vmin;
+    font-family: inherit;
+    display: block;
+    margin-bottom: 1vmin;
+}
+
+dialog label input[type="checkbox"] {
+    margin-right: 1vmin;
 }

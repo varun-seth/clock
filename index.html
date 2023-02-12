@@ -1,21 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Clock</title>
-    <link rel="icon" href="assets/icon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="assets/icon-flat.png" />
-  </head>
-  <meta name="color-scheme" content="light dark" />
-  <body id="theme-container">
-    <div id="clockContainer">
-      <div id="dial"></div>
-      <div id="center"></div>
-      <div id="hour"><div id="hour-clippable"></div></div>
-      <div id="minute"><div id="minute-clippable"></div></div>
-      <div id="second"><div id="second-clippable"></div></div>
-    </div>
-  </body>
-  <script src="script.js"></script>
+    <head>
+        <link rel="manifest" href="manifest.webmanifest">
+        <link rel="stylesheet" href="style.css">
+        <title>Clock</title>
+        <link rel="icon" href="assets/icon.png" type="image/png">
+        <link rel="apple-touch-icon" href="assets/icon-flat.png">
+    </head>
+    <meta
+        name="color-scheme"
+        content="light dark"
+    >
+    <body id="theme-container">
+        <div id="clockContainer">
+            <div id="dial"></div>
+            <div id="center"></div>
+            <div id="hour">
+                <div id="hour-clippable"></div>
+            </div>
+            <div id="minute">
+                <div id="minute-clippable"></div>
+            </div>
+            <div id="second">
+                <div id="second-clippable"></div>
+            </div>
+        </div>
+        <button
+            id="settingsButton"
+            aria-label="Settings"
+        >
+            Settings
+        </button>
+
+        <dialog
+            id="settingsDialog"
+            aria-modal="true"
+        >
+            <form method="dialog">
+                <label for="styleSelect">Style</label>
+                <select id="styleSelect"></select>
+
+                <label for="themeSelect">Theme</label>
+                <select id="themeSelect">
+                    <option value="system">System (default)</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+
+                <label for="secondsCheckbox">
+                    <input
+                        type="checkbox"
+                        id="secondsCheckbox"
+                    >
+                    Show Seconds
+                </label>
+                <menu>
+                    <button id="cancelButton">Cancel</button>
+                    <button
+                        id="saveButton"
+                        value="default"
+                    >
+                        Save
+                    </button>
+                </menu>
+            </form>
+        </dialog>
+    </body>
+    <script src="script.js"></script>
 </html>
