@@ -9,9 +9,9 @@
 
 A minimalist analog clock, made for old phones and tablets.
 
-- Switch between styles by clicking anywhere on the screen.
+- Switch between styles by clicking anywhere on the screen -> settings button.
     - The style name is saved in the URL (param) and localStorage.
-- Supports dark and light themes set by the user's system preferences.
+- Supports dark and light themes.
 - Devices with the same time will tick together.
 
 ## Install
