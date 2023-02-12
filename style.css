@@ -423,4 +423,6 @@ dialog label {
 
 dialog label input[type="checkbox"] {
     margin-right: 1vmin;
+    width: 3vmin;
+    height: 3vmin;
 }

@@ -299,16 +299,16 @@ function populateThemeOptions() {
 }
 
 function getThemeFromStorageOrDefault() {
-    return localStorage.getItem('theme') || 'system';
+    return localStorage.getItem('theme') || 'dark';
 }
 
 function getThemeFromUrlOrDefault() {
     const urlParams = new URLSearchParams(window.location.search);
     let theme = urlParams.get('theme');
     if (!theme) {
-        theme = localStorage.getItem('theme') || 'system';
+        theme = localStorage.getItem('theme') || 'dark';
     }
-    if (!['system', 'light', 'dark'].includes(theme)) theme = 'system';
+    if (!['system', 'light', 'dark'].includes(theme)) theme = 'dark';
     return theme;
 }
 
@@ -338,7 +338,7 @@ function getSecondsFromUrlOrDefault() {
     const urlParams = new URLSearchParams(window.location.search);
     let seconds = urlParams.get('seconds');
     if (seconds === null) {
-        seconds = localStorage.getItem('seconds') || 'false';
+        seconds = localStorage.getItem('seconds') || 'true';
     }
     return seconds === 'true';
 }
@@ -347,9 +347,9 @@ function getSecondsModeFromUrlOrDefault() {
     const urlParams = new URLSearchParams(window.location.search);
     let mode = urlParams.get('secondsMode');
     if (!mode) {
-        mode = localStorage.getItem('secondsMode') || 'digital';
+        mode = localStorage.getItem('secondsMode') || 'analog';
     }
-    if (!['digital', 'analog', 'smooth'].includes(mode)) mode = 'digital';
+    if (!['digital', 'analog', 'smooth'].includes(mode)) mode = 'analog';
     return mode;
 }
 
@@ -357,7 +357,7 @@ function getDateFromUrlOrDefault() {
     const urlParams = new URLSearchParams(window.location.search);
     let showDate = urlParams.get('date');
     if (showDate === null) {
-        showDate = localStorage.getItem('date') || 'false';
+        showDate = localStorage.getItem('date') || 'true';
     }
     return showDate === 'true';
 }
