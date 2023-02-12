@@ -18,7 +18,79 @@ for (let i = 0; i < 12; i++) {
 let lastSecondRotation = 0;
 let rotationOffset = 0;
 
-function updateTime() {
+function updateDate() {
+    let date = new Date();
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    let dayOfWeek = days[date.getDay()];
+    let month = months[date.getMonth()];
+    let dateNumber = date.getDate();
+
+    let dayMonthElement = document.getElementById('dateDayMonth');
+    let dateNumberElement = document.getElementById('dateNumber');
+
+    const container = document.getElementById('theme-container');
+    const isDateInside = container && container.classList.contains('date-inside');
+
+    if (dayMonthElement) {
+        if (isDateInside) {
+            dayMonthElement.innerHTML = `<span style="color: red;">${dayOfWeek}</span>`;
+        } else {
+            dayMonthElement.innerHTML = `<span style="color: red;">${dayOfWeek}</span> <span style="color: gray;">${month}</span>`;
+        }
+    }
+    if (dateNumberElement) {
+        dateNumberElement.textContent = dateNumber;
+    }
+}
+
+function checkDateDisplayMode() {
+    const container = document.getElementById('theme-container');
+    if (!container) return;
+
+    const showDate = getDateFromUrlOrDefault();
+    if (!showDate) {
+        container.classList.add('hide-date');
+        return;
+    }
+
+    container.classList.remove('hide-date');
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const isLandscape = vw > vh;
+    const minDimension = Math.min(vw, vh);
+    const clockSize = minDimension;
+
+    let availableSpace;
+    if (isLandscape) {
+        availableSpace = vw - clockSize;
+    } else {
+        availableSpace = vh - clockSize;
+    }
+
+    const minDateSize = minDimension * 0.20;
+
+    const dateDisplay = document.getElementById('dateDisplay');
+    const clockContainer = document.getElementById('clockContainer');
+    const dateContainer = document.getElementById('dateContainer');
+
+    if (availableSpace < minDateSize) {
+        container.classList.add('date-inside');
+        if (dateDisplay && clockContainer && dateDisplay.parentElement !== clockContainer) {
+            clockContainer.appendChild(dateDisplay);
+        }
+    } else {
+        container.classList.remove('date-inside');
+        if (dateDisplay && dateContainer && dateDisplay.parentElement !== dateContainer) {
+            dateContainer.appendChild(dateDisplay);
+        }
+    }
+
+    updateDate();
+} function updateTime() {
     let date = new Date();
     let milliseconds = date.getMilliseconds();
 
@@ -66,9 +138,14 @@ function updateTime() {
     document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
     document.documentElement.style.setProperty('--rotation-angle-hour', `${hourRotation}deg`);
     document.documentElement.style.setProperty('--rotation-angle-minute', `${minuteRotation}deg`);
+
+    updateDate();
 }
 
 updateTime();
+checkDateDisplayMode();
+
+window.addEventListener('resize', checkDateDisplayMode);
 let styleIndex = 0;
 
 let cursorTimeout;
@@ -177,12 +254,20 @@ function applySecondsModeBoot() {
 
 applySecondsModeBoot();
 
+function applyDateBoot() {
+    const show = getDateFromUrlOrDefault();
+    applyDate(show, false, true);
+}
+
+applyDateBoot();
+
 const settingsButton = document.getElementById('settingsButton');
 const settingsDialog = document.getElementById('settingsDialog');
 const styleSelect = document.getElementById('styleSelect');
 const themeSelect = document.getElementById('themeSelect');
 const secondsCheckbox = document.getElementById('secondsCheckbox');
 const secondsModeSelect = document.getElementById('secondsModeSelect');
+const dateCheckbox = document.getElementById('dateCheckbox');
 const saveButton = document.getElementById('saveButton');
 const cancelButton = document.getElementById('cancelButton');
 
@@ -191,6 +276,7 @@ let previousStyle = null;
 let previousTheme = null;
 let previousSeconds = null;
 let previousSecondsMode = null;
+let previousDate = null;
 let settingsSaved = false;
 
 function populateStyleOptions() {
@@ -267,6 +353,15 @@ function getSecondsModeFromUrlOrDefault() {
     return mode;
 }
 
+function getDateFromUrlOrDefault() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let showDate = urlParams.get('date');
+    if (showDate === null) {
+        showDate = localStorage.getItem('date') || 'false';
+    }
+    return showDate === 'true';
+}
+
 function applySeconds(show, persist = false, preventPush = false) {
     const container = document.getElementById('theme-container');
     if (!container) return;
@@ -304,6 +399,29 @@ function applySecondsMode(mode, persist = false, preventPush = false) {
     }
 }
 
+function applyDate(show, persist = false, preventPush = false) {
+    const container = document.getElementById('theme-container');
+    if (!container) return;
+    if (show) {
+        container.classList.remove('hide-date');
+    } else {
+        container.classList.add('hide-date');
+    }
+    if (persist) {
+        localStorage.setItem('date', show);
+    }
+    if (!preventPush) {
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('date', show);
+        history.pushState({}, '', currentUrl);
+    }
+    checkDateDisplayMode();
+}
+
+function applyDatePreview(show) {
+    applyDate(show, false, true);
+}
+
 function applySecondsModePreview(mode) {
     applySecondsMode(mode, false, true);
 }
@@ -331,6 +449,12 @@ function populateSecondsModeSelect() {
     if (!select) return;
     const current = getSecondsModeFromUrlOrDefault();
     select.value = current;
+}
+
+function populateDateCheckbox() {
+    if (!dateCheckbox) return;
+    const current = getDateFromUrlOrDefault();
+    dateCheckbox.checked = current;
 }
 
 function applyStylePreview(styleName) {
@@ -375,16 +499,17 @@ if (document.body) {
 if (settingsButton) {
     settingsButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        // capture current style so we can revert if user cancels
         previousStyle = getStyleFromUrlOrDefault();
         previousTheme = getThemeFromUrlOrDefault();
         previousSeconds = getSecondsFromUrlOrDefault();
         previousSecondsMode = getSecondsModeFromUrlOrDefault();
+        previousDate = getDateFromUrlOrDefault();
         settingsSaved = false;
         populateStyleOptions();
         populateThemeOptions();
         populateSecondsCheckbox();
         populateSecondsModeSelect();
+        populateDateCheckbox();
         if (settingsDialog && settingsDialog.showModal) {
             settingsDialog.showModal();
         }
@@ -393,7 +518,6 @@ if (settingsButton) {
 
 if (saveButton) {
     saveButton.addEventListener('click', (e) => {
-        // Persist the selected style
         settingsSaved = true;
         if (styleSelect && styleSelect.value) {
             applyStyle(styleSelect.value);
@@ -406,6 +530,9 @@ if (saveButton) {
         }
         if (secondsModeSelect && secondsModeSelect.value) {
             applySecondsMode(secondsModeSelect.value, true);
+        }
+        if (dateCheckbox) {
+            applyDate(dateCheckbox.checked, true);
         }
         if (settingsDialog && settingsDialog.close) settingsDialog.close();
         hideSettingsButton();
@@ -448,34 +575,38 @@ if (secondsModeSelect) {
     });
 }
 
+if (dateCheckbox) {
+    dateCheckbox.addEventListener('change', (e) => {
+        const val = e.target.checked;
+        applyDatePreview(val);
+    });
+}
+
 if (settingsDialog) {
     settingsDialog.addEventListener('close', (e) => {
-        // If the dialog closed without saving, revert preview
         if (!settingsSaved) {
             if (previousStyle) applyStylePreview(previousStyle);
             if (previousTheme) applyThemePreview(previousTheme);
             if (previousSeconds !== null) applySecondsPreview(previousSeconds);
             if (previousSecondsMode) applySecondsModePreview(previousSecondsMode);
+            if (previousDate !== null) applyDatePreview(previousDate);
         }
-        // reset flag
         settingsSaved = false;
         previousStyle = null;
         previousTheme = null;
         previousSeconds = null;
         previousSecondsMode = null;
+        previousDate = null;
     });
 
-    // Close dialog when clicking on backdrop (outside dialog content) — treat as Cancel
     settingsDialog.addEventListener('click', (e) => {
         if (e.target === settingsDialog) {
-            // call close() which will trigger the 'close' handler above and revert preview if needed
             if (settingsDialog.close) settingsDialog.close();
         }
     });
 }
 
 window.addEventListener('popstate', function (event) {
-    // When the user navigates back/forward, read the style from the URL and apply it
     let style = getStyleFromUrlOrDefault();
     applyStyle(style, true);
     let theme = getThemeFromUrlOrDefault();
@@ -484,4 +615,6 @@ window.addEventListener('popstate', function (event) {
     applySeconds(seconds, false, true);
     let secondsMode = getSecondsModeFromUrlOrDefault();
     applySecondsMode(secondsMode, false, true);
+    let showDate = getDateFromUrlOrDefault();
+    applyDate(showDate, false, true);
 });

@@ -90,3 +90,7 @@
     width: 1%;
     height: 49.25%;
 }
+
+#theme-container.roman:not(.hide-date).date-inside #dateDisplay {
+    left: 70%;
+}

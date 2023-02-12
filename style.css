@@ -32,22 +32,22 @@
 
 
 @media screen and (orientation: portrait) {
-    /* TODO */
+    #mainContainer {
+        flex-direction: column;
+    }
 }
 
 @media screen and (orientation: landscape) {
-    /* TODO */
+    #mainContainer {
+        flex-direction: row;
+    }
 }
 
 html,
 body {
-    /* prevent selecting because there is nothing to select */
     -webkit-user-select: none;
-    /* Safari */
     -moz-user-select: none;
-    /* Firefox */
     -ms-user-select: none;
-    /* IE 10+ and Edge */
     user-select: none;
 
     background-color: var(--background-color);
@@ -56,19 +56,153 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+    overflow: hidden;
 }
 
-#clockContainer {
+#mainContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#theme-container:not(.hide-date) #mainContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-container.hide-date #clockContainer {
     position: absolute;
     margin: auto;
-    height: 100vmin;
-    width: 100vmin;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    margin: auto;
+}
+
+#theme-container:not(.hide-date) #clockContainer {
+    position: relative;
+    margin: 0;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    flex-shrink: 0;
+}
+
+#clockContainer {
+    height: 100vmin;
+    width: 100vmin;
     overflow: hidden;
+    flex-shrink: 0;
+}
+
+#dateContainer {
+    display: none;
+    position: relative;
+    width: 60vmin;
+    height: 80vmin;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-container:not(.hide-date) #dateContainer {
+    display: flex;
+}
+
+#dateDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-weight: 300;
+}
+
+#dateDayMonth {
+    font-size: min(12vmin, 20cqmin);
+    line-height: 1;
+    opacity: 0.9;
+}
+
+#dateNumber {
+    font-size: min(50vmin, 80cqmin);
+    line-height: 1;
+    font-weight: 200;
+    margin-top: 2vmin;
+}
+
+#dateContainer {
+    container-type: size;
+    container-name: dateBox;
+}
+
+#theme-container:not(.hide-date).date-inside #clockContainer {
+    width: 100vmin;
+    height: 100vmin;
+}
+
+#theme-container:not(.hide-date).date-inside #dateContainer {
+    display: none;
+}
+
+#theme-container:not(.hide-date).date-inside #dateDisplay {
+    display: flex;
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 85%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    border: 0.3vmin solid rgba(var(--text-rgb), 0.3);
+    border-radius: 1vmin;
+    flex-direction: row;
+    gap: 1vmin;
+    padding: 0.5vmin 1vmin;
+}
+
+#theme-container:not(.hide-date).date-inside #dateDayMonth {
+    font-size: 4vmin;
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+}
+
+#theme-container:not(.hide-date).date-inside #dateNumber {
+    font-size: 4vmin;
+    margin-top: 0;
+    align-self: center;
+}
+
+@media screen and (orientation: landscape) {
+    #theme-container:not(.hide-date) #clockContainer {
+        width: min(100vmin, 100vh);
+        height: min(100vmin, 100vh);
+    }
+
+    #theme-container:not(.hide-date) #dateContainer {
+        width: min(60vmin, max(15vmin, calc(100vw - min(100vmin, 100vh) - 5vmin)));
+        height: min(80vmin, 100vh);
+    }
+}
+
+@media screen and (orientation: portrait) {
+    #theme-container:not(.hide-date) #clockContainer {
+        width: min(100vmin, 100vw);
+        height: min(100vmin, 100vw);
+    }
+
+    #theme-container:not(.hide-date) #dateContainer {
+        width: min(60vmin, 100vw);
+        height: min(80vmin, max(20vmin, calc(100vh - min(100vmin, 100vw) - 8vmin)));
+        margin-top: 3vmin;
+    }
 }
 
 #center,

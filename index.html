@@ -12,17 +12,25 @@
         content="light dark"
     >
     <body id="theme-container">
-        <div id="clockContainer">
-            <div id="dial"></div>
-            <div id="center"></div>
-            <div id="hour">
-                <div id="hour-clippable"></div>
+        <div id="mainContainer">
+            <div id="clockContainer">
+                <div id="dial"></div>
+                <div id="center"></div>
+                <div id="hour">
+                    <div id="hour-clippable"></div>
+                </div>
+                <div id="minute">
+                    <div id="minute-clippable"></div>
+                </div>
+                <div id="second">
+                    <div id="second-clippable"></div>
+                </div>
             </div>
-            <div id="minute">
-                <div id="minute-clippable"></div>
-            </div>
-            <div id="second">
-                <div id="second-clippable"></div>
+            <div id="dateContainer">
+                <div id="dateDisplay">
+                    <div id="dateDayMonth"></div>
+                    <div id="dateNumber"></div>
+                </div>
             </div>
         </div>
         <button
@@ -63,6 +71,14 @@
                         <option value="smooth">Smooth Run</option>
                     </select>
                 </div>
+
+                <label for="dateCheckbox">
+                    <input
+                        type="checkbox"
+                        id="dateCheckbox"
+                    >
+                    Show Date
+                </label>
 
                 <menu>
                     <button id="cancelButton">Cancel</button>
