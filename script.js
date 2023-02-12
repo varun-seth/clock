@@ -15,6 +15,9 @@ for (let i = 0; i < 12; i++) {
     addLegend(i + 1);
 }
 
+let lastSecondRotation = 0;
+let rotationOffset = 0;
+
 function updateTime() {
     let date = new Date();
     let milliseconds = date.getMilliseconds();
@@ -42,15 +45,47 @@ function updateTime() {
 
     let hourRotation = 30 * hours + minutes / 2 + seconds / 120;
     let minuteRotation = 6 * minutes + secondsRounded / 10;
-    let secondRotation = 6 * secondsRounded;
 
+    const secondsMode = getSecondsModeFromUrlOrDefault();
+    let secondRotation;
+
+    if (secondsMode === 'smooth') {
+        secondRotation = 6 * (seconds + milliseconds / 1000);
+    } else {
+        secondRotation = 6 * secondsRounded;
+    }
+
+    if (secondsMode === 'smooth' || secondsMode === 'analog') {
+        if (secondRotation < lastSecondRotation - 180) {
+            rotationOffset += 360;
+        }
+        lastSecondRotation = secondRotation;
+        secondRotation = secondRotation + rotationOffset;
+    }
+
+    document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
     document.documentElement.style.setProperty('--rotation-angle-hour', `${hourRotation}deg`);
     document.documentElement.style.setProperty('--rotation-angle-minute', `${minuteRotation}deg`);
-    document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
 }
 
 updateTime();
 let styleIndex = 0;
+
+let cursorTimeout;
+function hideCursor() {
+    document.body.classList.add('hide-cursor');
+}
+
+function showCursor() {
+    document.body.classList.remove('hide-cursor');
+    if (cursorTimeout) clearTimeout(cursorTimeout);
+    cursorTimeout = setTimeout(hideCursor, 10000);
+}
+
+document.addEventListener('mousemove', showCursor);
+document.addEventListener('mousedown', showCursor);
+document.addEventListener('keydown', showCursor);
+showCursor();
 
 styles = [
     'pill', // Rounded corners
@@ -135,11 +170,19 @@ function applySecondsBoot() {
 
 applySecondsBoot();
 
+function applySecondsModeBoot() {
+    const mode = getSecondsModeFromUrlOrDefault();
+    applySecondsMode(mode, false, true);
+}
+
+applySecondsModeBoot();
+
 const settingsButton = document.getElementById('settingsButton');
 const settingsDialog = document.getElementById('settingsDialog');
 const styleSelect = document.getElementById('styleSelect');
 const themeSelect = document.getElementById('themeSelect');
 const secondsCheckbox = document.getElementById('secondsCheckbox');
+const secondsModeSelect = document.getElementById('secondsModeSelect');
 const saveButton = document.getElementById('saveButton');
 const cancelButton = document.getElementById('cancelButton');
 
@@ -147,6 +190,7 @@ let hideSettingsTimer = null;
 let previousStyle = null;
 let previousTheme = null;
 let previousSeconds = null;
+let previousSecondsMode = null;
 let settingsSaved = false;
 
 function populateStyleOptions() {
@@ -213,6 +257,16 @@ function getSecondsFromUrlOrDefault() {
     return seconds === 'true';
 }
 
+function getSecondsModeFromUrlOrDefault() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let mode = urlParams.get('secondsMode');
+    if (!mode) {
+        mode = localStorage.getItem('secondsMode') || 'digital';
+    }
+    if (!['digital', 'analog', 'smooth'].includes(mode)) mode = 'digital';
+    return mode;
+}
+
 function applySeconds(show, persist = false, preventPush = false) {
     const container = document.getElementById('theme-container');
     if (!container) return;
@@ -235,10 +289,48 @@ function applySecondsPreview(show) {
     applySeconds(show, false, true);
 }
 
+function applySecondsMode(mode, persist = false, preventPush = false) {
+    const container = document.getElementById('theme-container');
+    if (!container) return;
+    container.classList.remove('seconds-mode-digital', 'seconds-mode-analog', 'seconds-mode-smooth');
+    container.classList.add(`seconds-mode-${mode}`);
+    if (persist) {
+        localStorage.setItem('secondsMode', mode);
+    }
+    if (!preventPush) {
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('secondsMode', mode);
+        history.pushState({}, '', currentUrl);
+    }
+}
+
+function applySecondsModePreview(mode) {
+    applySecondsMode(mode, false, true);
+}
+
 function populateSecondsCheckbox() {
     if (!secondsCheckbox) return;
     const current = getSecondsFromUrlOrDefault();
     secondsCheckbox.checked = current;
+    updateSecondsModeVisibility(current);
+}
+
+function updateSecondsModeVisibility(showSeconds) {
+    const secondsModeContainer = document.getElementById('secondsModeContainer');
+    if (secondsModeContainer) {
+        if (showSeconds) {
+            secondsModeContainer.classList.add('visible');
+        } else {
+            secondsModeContainer.classList.remove('visible');
+        }
+    }
+}
+
+function populateSecondsModeSelect() {
+    const select = document.getElementById('secondsModeSelect');
+    if (!select) return;
+    const current = getSecondsModeFromUrlOrDefault();
+    select.value = current;
 }
 
 function applyStylePreview(styleName) {
@@ -287,10 +379,12 @@ if (settingsButton) {
         previousStyle = getStyleFromUrlOrDefault();
         previousTheme = getThemeFromUrlOrDefault();
         previousSeconds = getSecondsFromUrlOrDefault();
+        previousSecondsMode = getSecondsModeFromUrlOrDefault();
         settingsSaved = false;
         populateStyleOptions();
         populateThemeOptions();
         populateSecondsCheckbox();
+        populateSecondsModeSelect();
         if (settingsDialog && settingsDialog.showModal) {
             settingsDialog.showModal();
         }
@@ -309,6 +403,9 @@ if (saveButton) {
         }
         if (secondsCheckbox) {
             applySeconds(secondsCheckbox.checked, true);
+        }
+        if (secondsModeSelect && secondsModeSelect.value) {
+            applySecondsMode(secondsModeSelect.value, true);
         }
         if (settingsDialog && settingsDialog.close) settingsDialog.close();
         hideSettingsButton();
@@ -340,6 +437,14 @@ if (secondsCheckbox) {
     secondsCheckbox.addEventListener('change', (e) => {
         const val = e.target.checked;
         applySecondsPreview(val);
+        updateSecondsModeVisibility(val);
+    });
+}
+
+if (secondsModeSelect) {
+    secondsModeSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        applySecondsModePreview(val);
     });
 }
 
@@ -350,12 +455,14 @@ if (settingsDialog) {
             if (previousStyle) applyStylePreview(previousStyle);
             if (previousTheme) applyThemePreview(previousTheme);
             if (previousSeconds !== null) applySecondsPreview(previousSeconds);
+            if (previousSecondsMode) applySecondsModePreview(previousSecondsMode);
         }
         // reset flag
         settingsSaved = false;
         previousStyle = null;
         previousTheme = null;
         previousSeconds = null;
+        previousSecondsMode = null;
     });
 
     // Close dialog when clicking on backdrop (outside dialog content) — treat as Cancel
@@ -375,4 +482,6 @@ window.addEventListener('popstate', function (event) {
     applyTheme(theme, false, true);
     let seconds = getSecondsFromUrlOrDefault();
     applySeconds(seconds, false, true);
+    let secondsMode = getSecondsModeFromUrlOrDefault();
+    applySecondsMode(secondsMode, false, true);
 });
