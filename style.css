@@ -138,8 +138,6 @@ body {
     margin-top: 2vmin;
 }
 
-#dateContainer {}
-
 #theme-container:not(.hide-date).date-inside #clockContainer {
     width: 100vmin;
     height: 100vmin;
@@ -287,6 +285,8 @@ body {
     width: 3%;
     height: 25%;
     opacity: 1;
+    -webkit-transform: translateX(-50%) translateY(0) scaleY(1);
+    transform: translateX(-50%) translateY(0) scaleY(1);
     -webkit-transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
     transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
 }
@@ -294,6 +294,8 @@ body {
 #minute {
     width: 2%;
     height: 50%;
+    -webkit-transform: translateX(-50%) translateY(0) scaleY(1);
+    transform: translateX(-50%) translateY(0) scaleY(1);
     -webkit-transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
     transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
 }
@@ -302,6 +304,8 @@ body {
     background-color: var(--second-color);
     width: 1%;
     height: 50%;
+    -webkit-transform: translateX(-50%) translateY(15%) scaleY(1.15);
+    transform: translateX(-50%) translateY(15%) scaleY(1.15);
     -webkit-transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
     transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
 }
