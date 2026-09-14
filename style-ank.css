@@ -117,6 +117,8 @@
     border-radius: 4vmin;
     background: var(--needle-hole-color);
     box-shadow: inset 0 0 0 0.7vmin var(--text-color);
+    -webkit-transform: translateX(-50%) translateY(-18.5%) scaleY(0.815);
+    transform: translateX(-50%) translateY(-18.5%) scaleY(0.815);
 }
 
 .ank #minute {
@@ -126,11 +128,15 @@
     /* background: transparent; */
     background-color: var(--needle-hole-color);
     box-shadow: inset 0 0 0 0.7vmin var(--text-color);
+    -webkit-transform: translateX(-50%) translateY(-10%) scaleY(0.9);
+    transform: translateX(-50%) translateY(-10%) scaleY(0.9);
 }
 
 .ank #second {
     width: 0.5%;
     height: 49.5%;
+    -webkit-transform: translateX(-50%) translateY(16%) scaleY(1.16);
+    transform: translateX(-50%) translateY(16%) scaleY(1.16);
 }
 
 

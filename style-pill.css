@@ -31,4 +31,6 @@
 .pill #second {
     width: 0.5%;
     height: 49%;
+    -webkit-transform: translateX(-50%) translateY(16%) scaleY(1.16);
+    transform: translateX(-50%) translateY(16%) scaleY(1.16);
 }

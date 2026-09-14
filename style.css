@@ -287,8 +287,6 @@ body {
     opacity: 1;
     -webkit-transform: translateX(-50%) translateY(0) scaleY(1);
     transform: translateX(-50%) translateY(0) scaleY(1);
-    -webkit-transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
-    transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
 }
 
 #minute {
@@ -296,8 +294,6 @@ body {
     height: 50%;
     -webkit-transform: translateX(-50%) translateY(0) scaleY(1);
     transform: translateX(-50%) translateY(0) scaleY(1);
-    -webkit-transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
-    transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
 }
 
 #second {
@@ -306,8 +302,6 @@ body {
     height: 50%;
     -webkit-transform: translateX(-50%) translateY(15%) scaleY(1.15);
     transform: translateX(-50%) translateY(15%) scaleY(1.15);
-    -webkit-transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
-    transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
 }
 
 #theme-container.seconds-mode-analog #second-wrapper {

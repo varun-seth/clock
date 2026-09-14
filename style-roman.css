@@ -79,16 +79,22 @@
 
 .roman #hour {
     width: 3%;
+    -webkit-transform: translateX(-50%) translateY(16%) scaleY(1.16);
+    transform: translateX(-50%) translateY(16%) scaleY(1.16);
 }
 
 .roman #minute {
     height: 49%;
     width: 2%;
+    -webkit-transform: translateX(-50%) translateY(10%) scaleY(1.1);
+    transform: translateX(-50%) translateY(10%) scaleY(1.1);
 }
 
 .roman #second {
     width: 1%;
     height: 49.25%;
+    -webkit-transform: translateX(-50%) translateY(16%) scaleY(1.16);
+    transform: translateX(-50%) translateY(16%) scaleY(1.16);
 }
 
 #theme-container.roman:not(.hide-date).date-inside #dateDisplay {
