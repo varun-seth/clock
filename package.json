@@ -1,0 +1,27 @@
+{
+  "name": "clock",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">   <img src=\"logo.svg\" alt=\"Alt text\"> </div>",
+  "main": "script.js",
+  "scripts": {
+    "build": "babel script.js -o script.legacy.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varun-seth/clock.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/varun-seth/clock/issues"
+  },
+  "homepage": "https://github.com/varun-seth/clock#readme",
+  "devDependencies": {
+    "@babel/cli": "^8.0.5",
+    "@babel/core": "^8.0.5",
+    "@babel/preset-env": "^8.0.5"
+  }
+}

@@ -1,3 +1,7 @@
+if (window.cssVars) {
+    cssVars({ watch: true });
+}
+
 function addLegend(hour) {
     let dial = document.getElementById('dial');
     let element = document.createElement("DIV");
@@ -263,6 +267,9 @@ applyDateBoot();
 
 const settingsButton = document.getElementById('settingsButton');
 const settingsDialog = document.getElementById('settingsDialog');
+if (settingsDialog && window.dialogPolyfill) {
+    dialogPolyfill.registerDialog(settingsDialog);
+}
 const styleSelect = document.getElementById('styleSelect');
 const themeSelect = document.getElementById('themeSelect');
 const secondsCheckbox = document.getElementById('secondsCheckbox');
