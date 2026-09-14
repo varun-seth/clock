@@ -10,6 +10,7 @@ function addLegend(hour) {
     element.style.position = "absolute";
     innerElement.classList.add("legends");
     let degree = hour * 30;
+    element.style.webkitTransform = `rotate(${degree}deg)`;
     element.style.transform = `rotate(${degree}deg)`;
     dial.appendChild(element);
     element.appendChild(innerElement);

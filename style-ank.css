@@ -2,8 +2,14 @@
     --tail-length-hour: -18.5%;
     --tail-length-minute: -10%;
     --tail-length-second: 16%;
-    --needle-hole-color: color-mix(in srgb, var(--text-color) 80%, var(--background-color));
+    --needle-hole-color: rgba(128, 128, 128, 0.8);
     /* --needle-hole-color: #45dc47; */
+}
+
+@supports (background: color-mix(in srgb, white 80%, black)) {
+    .ank {
+        --needle-hole-color: color-mix(in srgb, var(--text-color) 80%, var(--background-color));
+    }
 }
 
 .ank #clockContainer {
@@ -27,75 +33,88 @@
     position: absolute;
     font-family: sans-serif, Verdana, Geneva, Tahoma, sans-serif;
     font-size: 10vmin;
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     width: 15vmin;
     height: 15vmin;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ank .legendsContainer:nth-child(1)::after {
     content: "1";
     /* rotate: -30deg; */
+    -webkit-transform: translateX(-50%) rotate(-30deg);
     transform: translateX(-50%) rotate(-30deg);
 }
 
 .ank .legendsContainer:nth-child(2)::after {
     content: "2";
     /* rotate: -60deg; */
+    -webkit-transform: translateX(-50%) rotate(-60deg);
     transform: translateX(-50%) rotate(-60deg);
 }
 
 .ank .legendsContainer:nth-child(3)::after {
     content: "3";
     /* rotate: -90deg; */
+    -webkit-transform: translateX(-50%) rotate(-90deg);
     transform: translateX(-50%) rotate(-90deg);
 }
 
 .ank .legendsContainer:nth-child(4)::after {
     content: "4";
     /* rotate: -120deg; */
+    -webkit-transform: translateX(-50%) rotate(-120deg);
     transform: translateX(-50%) rotate(-120deg);
 }
 
 .ank .legendsContainer:nth-child(5)::after {
     content: "5";
+    -webkit-transform: translateX(-50%) rotate(-150deg);
     transform: translateX(-50%) rotate(-150deg);
 }
 
 .ank .legendsContainer:nth-child(6)::after {
     content: "6";
+    -webkit-transform: translateX(-50%) rotate(-180deg);
     transform: translateX(-50%) rotate(-180deg);
 }
 
 .ank .legendsContainer:nth-child(7)::after {
     content: "7";
+    -webkit-transform: translateX(-50%) rotate(-210deg);
     transform: translateX(-50%) rotate(-210deg);
 }
 
 .ank .legendsContainer:nth-child(8)::after {
     content: "8";
+    -webkit-transform: translateX(-50%) rotate(-240deg);
     transform: translateX(-50%) rotate(-240deg);
 }
 
 .ank .legendsContainer:nth-child(9)::after {
     content: "9";
+    -webkit-transform: translateX(-50%) rotate(-270deg);
     transform: translateX(-50%) rotate(-270deg);
 }
 
 .ank .legendsContainer:nth-child(10)::after {
     content: "10";
+    -webkit-transform: translateX(-50%) rotate(-300deg);
     transform: translateX(-50%) rotate(-300deg);
 }
 
 .ank .legendsContainer:nth-child(11)::after {
     content: "11";
+    -webkit-transform: translateX(-50%) rotate(-330deg);
     transform: translateX(-50%) rotate(-330deg);
 }
 
 .ank .legendsContainer:nth-child(12)::after {
     content: "12";
-
+    -webkit-transform: translateX(-50%) rotate(0deg);
     transform: translateX(-50%) rotate(-0deg);
 
 }
@@ -115,6 +134,7 @@
     height: 27%;
     width: 4%;
     border-radius: 4vmin;
+    background: rgba(128, 128, 128, 0.8);
     background: var(--needle-hole-color);
     box-shadow: inset 0 0 0 0.7vmin var(--text-color);
     -webkit-transform: translateX(-50%) translateY(-18.5%) scaleY(0.815);
@@ -126,6 +146,7 @@
     height: 47%;
     border-radius: 4vmin;
     /* background: transparent; */
+    background-color: rgba(128, 128, 128, 0.8);
     background-color: var(--needle-hole-color);
     box-shadow: inset 0 0 0 0.7vmin var(--text-color);
     -webkit-transform: translateX(-50%) translateY(-10%) scaleY(0.9);
@@ -143,27 +164,40 @@
 .ank #minute-clippable::after {
     content: '';
     display: block;
-    width: 100%;
+    width: 30%;
     height: 10%;
     background: var(--text-color);
     position: absolute;
-    left: 0;
+    left: 35%;
     top: 100%;
+    -webkit-transform: translateY(-10%);
     transform: translateY(-10%);
+    -webkit-clip-path: polygon(30% 0%, 30% 100%, 70% 100%, 70% 0%);
     clip-path: polygon(30% 0%, 30% 100%, 70% 100%, 70% 0%);
 }
 
 .ank #hour::after {
     content: '';
     display: block;
-    width: 100%;
+    width: 30%;
     height: 20%;
     background: var(--text-color);
     position: absolute;
-    left: 0;
+    left: 35%;
     top: 100%;
+    -webkit-transform: translateY(-10%);
     transform: translateY(-10%);
+    -webkit-clip-path: polygon(30% 0%, 30% 100%, 70% 100%, 70% 0%);
     clip-path: polygon(30% 0%, 30% 100%, 70% 100%, 70% 0%);
+}
+
+@supports (clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%)) {
+
+    .ank #minute-clippable::after,
+    .ank #hour::after {
+        width: 100%;
+        left: 0;
+    }
 }
 
 
