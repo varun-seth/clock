@@ -1,9 +1,15 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "ios": "9"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "ios": "9"
+        }
       }
-    }]
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-template-literals"
   ]
 }

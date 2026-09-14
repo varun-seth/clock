@@ -1,5 +1,4 @@
 :root {
-    color-scheme: light dark;
     /* By default prefers dark theme. */
     --text-color: white;
     --text-rgb: 255, 255, 255;
@@ -125,22 +124,21 @@ body {
 }
 
 #dateDayMonth {
+    font-size: 12vmin;
     font-size: min(12vmin, 20cqmin);
     line-height: 1;
     opacity: 0.9;
 }
 
 #dateNumber {
+    font-size: 50vmin;
     font-size: min(50vmin, 80cqmin);
     line-height: 1;
     font-weight: 200;
     margin-top: 2vmin;
 }
 
-#dateContainer {
-    container-type: size;
-    container-name: dateBox;
-}
+#dateContainer {}
 
 #theme-container:not(.hide-date).date-inside #clockContainer {
     width: 100vmin;
@@ -182,11 +180,15 @@ body {
 
 @media screen and (orientation: landscape) {
     #theme-container:not(.hide-date) #clockContainer {
+        width: 100vh;
+        height: 100vh;
         width: min(100vmin, 100vh);
         height: min(100vmin, 100vh);
     }
 
     #theme-container:not(.hide-date) #dateContainer {
+        width: 60vmin;
+        height: 80vmin;
         width: min(60vmin, max(15vmin, calc(100vw - min(100vmin, 100vh) - 5vmin)));
         height: min(80vmin, 100vh);
     }
@@ -194,15 +196,44 @@ body {
 
 @media screen and (orientation: portrait) {
     #theme-container:not(.hide-date) #clockContainer {
+        width: 100vw;
+        height: 100vw;
         width: min(100vmin, 100vw);
         height: min(100vmin, 100vw);
     }
 
     #theme-container:not(.hide-date) #dateContainer {
+        width: 60vmin;
+        height: 20vmin;
         width: min(60vmin, 100vw);
         height: min(80vmin, max(20vmin, calc(100vh - min(100vmin, 100vw) - 8vmin)));
         margin-top: 3vmin;
     }
+}
+
+.hand-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    z-index: 1;
+}
+
+#hour-wrapper {
+    z-index: 1;
+}
+
+#minute-wrapper {
+    z-index: 2;
+}
+
+#second-wrapper {
+    z-index: 3;
 }
 
 #center,
@@ -211,11 +242,22 @@ body {
 #second {
     position: absolute;
     background: var(--text-color);
+    -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
     transform: translate(-50%, 0%);
+    box-shadow: 0vmin 0vmin 1vmin var(--background-color);
+}
+
+#center {
     bottom: 50%;
     left: 50%;
-    box-shadow: 0vmin 0vmin 1vmin var(--background-color);
+}
+
+#hour,
+#minute,
+#second {
+    bottom: 50%;
+    left: 50%;
 }
 
 .legends {
@@ -242,47 +284,49 @@ body {
 }
 
 #hour {
-    z-index: 1;
     width: 3%;
     height: 25%;
     opacity: 1;
-    transform: translateX(-50%) rotate(var(--rotation-angle-hour)) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
+    -webkit-transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
+    transform: translateX(-50%) translateY(var(--tail-length-hour)) scaleY(calc(100% + var(--tail-length-hour)));
 }
 
 #minute {
-    z-index: 2;
     width: 2%;
     height: 50%;
-    transform: translateX(-50%) rotate(var(--rotation-angle-minute)) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
+    -webkit-transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
+    transform: translateX(-50%) translateY(var(--tail-length-minute)) scaleY(calc(100% + var(--tail-length-minute)));
 }
 
 #second {
-    z-index: 3;
     background-color: var(--second-color);
     width: 1%;
     height: 50%;
-    transform: translateX(-50%) rotate(var(--rotation-angle-second)) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
+    -webkit-transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
+    transform: translateX(-50%) translateY(var(--tail-length-second)) scaleY(calc(100% + var(--tail-length-second)));
 }
 
-#theme-container.seconds-mode-analog #second {
+#theme-container.seconds-mode-analog #second-wrapper {
     transition: transform 100ms ease-out 900ms;
 }
 
-#theme-container.seconds-mode-smooth #second {
+#theme-container.seconds-mode-smooth #second-wrapper {
     transition: transform 1000ms linear;
 }
 
 #center {
     background-color: var(--text-color);
     z-index: 5;
+    -webkit-transform-origin: bottom left;
     transform-origin: bottom left;
+    -webkit-transform: translate(-50%, 50%);
     transform: translate(-50%, 50%);
     border-radius: 100%;
     width: 3%;
     height: 3%;
 }
 
-#theme-container.hide-seconds #second {
+#theme-container.hide-seconds #second-wrapper {
     display: none;
 }
 

@@ -1,9 +1,3 @@
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 if (window.cssVars) {
   cssVars({
     watch: true
@@ -17,7 +11,7 @@ function addLegend(hour) {
   element.style.position = "absolute";
   innerElement.classList.add("legends");
   var degree = hour * 30;
-  element.style.transform = `rotate(${degree}deg)`;
+  element.style.transform = "rotate(".concat(degree, "deg)");
   dial.appendChild(element);
   element.appendChild(innerElement);
 }
@@ -26,6 +20,10 @@ for (var i = 0; i < 12; i++) {
 }
 var lastSecondRotation = 0;
 var rotationOffset = 0;
+function setTransform(element, value) {
+  element.style.webkitTransform = value;
+  element.style.transform = value;
+}
 function updateDate() {
   var date = new Date();
   var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -39,9 +37,9 @@ function updateDate() {
   var isDateInside = container && container.classList.contains('date-inside');
   if (dayMonthElement) {
     if (isDateInside) {
-      dayMonthElement.innerHTML = `<span style="color: red;">${dayOfWeek}</span>`;
+      dayMonthElement.innerHTML = "<span style=\"color: red;\">".concat(dayOfWeek, "</span>");
     } else {
-      dayMonthElement.innerHTML = `<span style="color: red;">${dayOfWeek}</span> <span style="color: gray;">${month}</span>`;
+      dayMonthElement.innerHTML = "<span style=\"color: red;\">".concat(dayOfWeek, "</span> <span style=\"color: gray;\">").concat(month, "</span>");
     }
   }
   if (dateNumberElement) {
@@ -124,9 +122,12 @@ function updateTime() {
     lastSecondRotation = secondRotation;
     secondRotation = secondRotation + rotationOffset;
   }
-  document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
-  document.documentElement.style.setProperty('--rotation-angle-hour', `${hourRotation}deg`);
-  document.documentElement.style.setProperty('--rotation-angle-minute', `${minuteRotation}deg`);
+  var hourWrapper = document.getElementById('hour-wrapper');
+  if (hourWrapper) setTransform(hourWrapper, "rotate(".concat(hourRotation, "deg)"));
+  var minuteWrapper = document.getElementById('minute-wrapper');
+  if (minuteWrapper) setTransform(minuteWrapper, "rotate(".concat(minuteRotation, "deg)"));
+  var secondWrapper = document.getElementById('second-wrapper');
+  if (secondWrapper) setTransform(secondWrapper, "rotate(".concat(secondRotation, "deg)"));
   updateDate();
 }
 updateTime();
@@ -165,23 +166,31 @@ function loadStyleSheet(path) {
   head.appendChild(link); // Appending the link element to the head
 }
 styles.map(function (name) {
-  loadStyleSheet(`style-${name}.css`);
+  loadStyleSheet("style-".concat(name, ".css"));
 });
+function removeClasses(element, classNames) {
+  classNames.forEach(function (className) {
+    return element.classList.remove(className);
+  });
+}
+function updateUrlParameter(name, value) {
+  var params = new URLSearchParams(window.location.search);
+  params.set(name, value);
+  var query = params.toString();
+  history.pushState({}, '', window.location.pathname + (query ? '?' + query : '') + (window.location.hash || ''));
+}
 function applyStyle(styleName) {
   var preventPush = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  document.title = `Clock - ${styleName} style`;
+  document.title = "Clock - ".concat(styleName, " style");
   var container = document.getElementById('theme-container');
   if (container) {
-    var _container$classList;
     // remove existing style classes but preserve theme-* classes
-    (_container$classList = container.classList).remove.apply(_container$classList, _toConsumableArray(styles));
+    removeClasses(container, styles);
     container.classList.add(styleName);
   }
   localStorage.setItem('style', styleName);
   if (!preventPush) {
-    var currentUrl = new URL(window.location);
-    currentUrl.searchParams.set('style', styleName);
-    history.pushState({}, '', currentUrl);
+    updateUrlParameter('style', styleName);
   }
 }
 function nextStyle() {
@@ -283,7 +292,7 @@ function applyTheme(themeName) {
   // themeName: 'system'|'light'|'dark'
   var container = document.getElementById('theme-container');
   if (!container) return;
-  container.classList.remove('theme-light', 'theme-dark');
+  removeClasses(container, ['theme-light', 'theme-dark']);
   if (themeName === 'light') {
     container.classList.add('theme-light');
   } else if (themeName === 'dark') {
@@ -295,9 +304,7 @@ function applyTheme(themeName) {
     localStorage.setItem('theme', themeName);
   }
   if (!preventPush) {
-    var currentUrl = new URL(window.location);
-    currentUrl.searchParams.set('theme', themeName);
-    history.pushState({}, '', currentUrl);
+    updateUrlParameter('theme', themeName);
   }
 }
 function getSecondsFromUrlOrDefault() {
@@ -339,9 +346,7 @@ function applySeconds(show) {
     localStorage.setItem('seconds', show);
   }
   if (!preventPush) {
-    var currentUrl = new URL(window.location);
-    currentUrl.searchParams.set('seconds', show);
-    history.pushState({}, '', currentUrl);
+    updateUrlParameter('seconds', show);
   }
 }
 function applySecondsPreview(show) {
@@ -352,15 +357,13 @@ function applySecondsMode(mode) {
   var preventPush = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var container = document.getElementById('theme-container');
   if (!container) return;
-  container.classList.remove('seconds-mode-digital', 'seconds-mode-analog', 'seconds-mode-smooth');
-  container.classList.add(`seconds-mode-${mode}`);
+  removeClasses(container, ['seconds-mode-digital', 'seconds-mode-analog', 'seconds-mode-smooth']);
+  container.classList.add('seconds-mode-' + mode);
   if (persist) {
     localStorage.setItem('secondsMode', mode);
   }
   if (!preventPush) {
-    var currentUrl = new URL(window.location);
-    currentUrl.searchParams.set('secondsMode', mode);
-    history.pushState({}, '', currentUrl);
+    updateUrlParameter('secondsMode', mode);
   }
 }
 function applyDate(show) {
@@ -377,9 +380,7 @@ function applyDate(show) {
     localStorage.setItem('date', show);
   }
   if (!preventPush) {
-    var currentUrl = new URL(window.location);
-    currentUrl.searchParams.set('date', show);
-    history.pushState({}, '', currentUrl);
+    updateUrlParameter('date', show);
   }
   checkDateDisplayMode();
 }
@@ -417,13 +418,12 @@ function populateDateCheckbox() {
   dateCheckbox.checked = current;
 }
 function applyStylePreview(styleName) {
-  var _container$classList2;
   // Apply visual preview without persisting to localStorage or history
-  document.title = `Clock - ${styleName} style`;
+  document.title = "Clock - ".concat(styleName, " style");
   var container = document.getElementById('theme-container');
   if (!container) return;
   // remove any other style classes (but keep theme classes)
-  (_container$classList2 = container.classList).remove.apply(_container$classList2, _toConsumableArray(styles));
+  removeClasses(container, styles);
   container.classList.add(styleName);
   // update styleIndex so nextStyle/other code remains consistent
   var idx = styles.indexOf(styleName);

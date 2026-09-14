@@ -22,6 +22,11 @@ for (let i = 0; i < 12; i++) {
 let lastSecondRotation = 0;
 let rotationOffset = 0;
 
+function setTransform(element, value) {
+    element.style.webkitTransform = value;
+    element.style.transform = value;
+}
+
 function updateDate() {
     let date = new Date();
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -139,9 +144,14 @@ function checkDateDisplayMode() {
         secondRotation = secondRotation + rotationOffset;
     }
 
-    document.documentElement.style.setProperty('--rotation-angle-second', `${secondRotation}deg`);
-    document.documentElement.style.setProperty('--rotation-angle-hour', `${hourRotation}deg`);
-    document.documentElement.style.setProperty('--rotation-angle-minute', `${minuteRotation}deg`);
+    const hourWrapper = document.getElementById('hour-wrapper');
+    if (hourWrapper) setTransform(hourWrapper, `rotate(${hourRotation}deg)`);
+
+    const minuteWrapper = document.getElementById('minute-wrapper');
+    if (minuteWrapper) setTransform(minuteWrapper, `rotate(${minuteRotation}deg)`);
+
+    const secondWrapper = document.getElementById('second-wrapper');
+    if (secondWrapper) setTransform(secondWrapper, `rotate(${secondRotation}deg)`);
 
     updateDate();
 }
@@ -189,19 +199,28 @@ function loadStyleSheet(path) {
 
 styles.map((name) => { loadStyleSheet(`style-${name}.css`); })
 
+function removeClasses(element, classNames) {
+    classNames.forEach((className) => element.classList.remove(className));
+}
+
+function updateUrlParameter(name, value) {
+    var params = new URLSearchParams(window.location.search);
+    params.set(name, value);
+    var query = params.toString();
+    history.pushState({}, '', window.location.pathname + (query ? '?' + query : '') + (window.location.hash || ''));
+}
+
 function applyStyle(styleName, preventPush = false) {
     document.title = `Clock - ${styleName} style`;
     const container = document.getElementById('theme-container');
     if (container) {
         // remove existing style classes but preserve theme-* classes
-        container.classList.remove(...styles);
+        removeClasses(container, styles);
         container.classList.add(styleName);
     }
     localStorage.setItem('style', styleName);
     if (!preventPush) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('style', styleName);
-        history.pushState({}, '', currentUrl);
+        updateUrlParameter('style', styleName);
     }
 }
 
@@ -323,7 +342,7 @@ function applyTheme(themeName, persist = false, preventPush = false) {
     // themeName: 'system'|'light'|'dark'
     const container = document.getElementById('theme-container');
     if (!container) return;
-    container.classList.remove('theme-light', 'theme-dark');
+    removeClasses(container, ['theme-light', 'theme-dark']);
     if (themeName === 'light') {
         container.classList.add('theme-light');
     } else if (themeName === 'dark') {
@@ -335,9 +354,7 @@ function applyTheme(themeName, persist = false, preventPush = false) {
         localStorage.setItem('theme', themeName);
     }
     if (!preventPush) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('theme', themeName);
-        history.pushState({}, '', currentUrl);
+        updateUrlParameter('theme', themeName);
     }
 }
 
@@ -381,9 +398,7 @@ function applySeconds(show, persist = false, preventPush = false) {
         localStorage.setItem('seconds', show);
     }
     if (!preventPush) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('seconds', show);
-        history.pushState({}, '', currentUrl);
+        updateUrlParameter('seconds', show);
     }
 }
 
@@ -394,15 +409,13 @@ function applySecondsPreview(show) {
 function applySecondsMode(mode, persist = false, preventPush = false) {
     const container = document.getElementById('theme-container');
     if (!container) return;
-    container.classList.remove('seconds-mode-digital', 'seconds-mode-analog', 'seconds-mode-smooth');
-    container.classList.add(`seconds-mode-${mode}`);
+    removeClasses(container, ['seconds-mode-digital', 'seconds-mode-analog', 'seconds-mode-smooth']);
+    container.classList.add('seconds-mode-' + mode);
     if (persist) {
         localStorage.setItem('secondsMode', mode);
     }
     if (!preventPush) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('secondsMode', mode);
-        history.pushState({}, '', currentUrl);
+        updateUrlParameter('secondsMode', mode);
     }
 }
 
@@ -418,9 +431,7 @@ function applyDate(show, persist = false, preventPush = false) {
         localStorage.setItem('date', show);
     }
     if (!preventPush) {
-        const currentUrl = new URL(window.location);
-        currentUrl.searchParams.set('date', show);
-        history.pushState({}, '', currentUrl);
+        updateUrlParameter('date', show);
     }
     checkDateDisplayMode();
 }
@@ -470,7 +481,7 @@ function applyStylePreview(styleName) {
     const container = document.getElementById('theme-container');
     if (!container) return;
     // remove any other style classes (but keep theme classes)
-    container.classList.remove(...styles);
+    removeClasses(container, styles);
     container.classList.add(styleName);
     // update styleIndex so nextStyle/other code remains consistent
     const idx = styles.indexOf(styleName);
